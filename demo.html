@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>leaflet.markermenu</title>
+    <link type="text/css" rel="stylesheet" href="./css/MarkerMenu.css">
+    <link type="text/css" rel="stylesheet" href="./css/leaflet.css">
+    <link rel="stylesheet" href="//unpkg.com/view-design/dist/styles/iview.css">
+    <script src="./js/leaflet-src.js"> </script>
+    <script src="./js/MarkerMenu.js"> </script>
+    <style>
+        #map {
+            width: 800px;
+            height: 800px;
+        }
+
+        .ivu-icon-ios-cog:before {
+            content: "\f18d";
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map">
+
+    </div>
+
+    <script>
+        var map = L.map('map').setView([35.9, 120.1], 13);
+
+        L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: ''
+        }).addTo(map);
+
+        let stationIcon_task = L.icon({
+            iconUrl: './img/station_task.png',
+            iconSize: [32, 45],
+            iconAnchor: [16, 45],
+            popupAnchor: [-3, -76],
+            shadowSize: [68, 95],
+            shadowAnchor: [22, 94]
+        });
+
+        function addmenu() {
+            var menu = {
+                radius: 85,
+                size: [45, 45],
+                title: "test",
+                items: [{
+                        prop: { name: "test1" },
+                        title: "任务配置1",
+                        icon: "ivu-icon ivu-icon-ios-cog",
+                        click: function() {
+                            alert("点击test1")
+                        }
+                    }, {
+                        prop: { name: "test2" },
+                        title: "任务配置2",
+                        icon: "ivu-icon ivu-icon-ios-cog",
+                        click: function() {
+                            alert("点击test2")
+                        }
+                    },
+                    {
+                        prop: { name: "test3" },
+                        title: "任务配置3",
+                        icon: "ivu-icon ivu-icon-ios-cog",
+                        click: function() {
+                            alert("点击test3")
+                        }
+                    }
+                ]
+            };
+            return menu;
+        }
+        let marker = L.marker([35.9, 120.1], { icon: stationIcon_task, zIndexOffset: 100 }).addTo(map);
+        marker.setMenu(addmenu());
+        marker.on('click', function(e) {
+            //marker.closeMenu(); 关掉其他的菜单
+        });
+    </script>
+</body>
+
+</html>

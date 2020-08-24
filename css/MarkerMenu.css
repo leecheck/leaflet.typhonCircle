@@ -1,0 +1,30 @@
+.marker-menu-item{
+    z-index: 9999;
+}
+
+.leaflet-marker-menu-item {
+	background: #3866ce;
+	box-shadow: 0 2px 2px rgba(0,0,0,0.3);
+}
+.leaflet-marker-menu-title {
+	width: 150px;
+	height: 30px;
+	left: 60px;
+	top: 10px;
+	line-height: 30px;
+	padding-left: 10px;
+	font-size: 17px;
+	background: -webkit-gradient(linear,-10% 16%, 110% 100%, from(rgba(255, 255, 255, 0)), to(rgba(255, 255, 255, 0)), color-stop(0.2, #4877a8));
+	color: #fff;
+}
+
+.ivu-icon-button-menu{
+	font-size: 26px;
+	margin-left: 9px;
+	line-height: 45px !important;
+	color: white;
+}
+
+.item-2 {
+	background: #06f;
+}
