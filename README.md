@@ -1,5 +1,9 @@
-# leaflet.markermenu
-在 leaflet-marker-menu 库基础上进行的一些小修改
+# leaflet.typhonCircle
+扩展 leaflet-sector 实现台风风圈绘制
+
+1.引用Sector.js
+2.L.circle option指定tpCircle数组
 
 效果参考：
-![效果](/GIF.gif "图片Title")
+demo.html
+![效果](/Image.png "图片Title")

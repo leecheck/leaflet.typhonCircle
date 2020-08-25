@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <title>leaflet.markermenu</title>
+    <title>leaflet.typhonCircle</title>
     <link type="text/css" rel="stylesheet" href="./css/MarkerMenu.css">
     <link type="text/css" rel="stylesheet" href="./css/leaflet.css">
     <link rel="stylesheet" href="//unpkg.com/view-design/dist/styles/iview.css">
     <script src="./js/leaflet-src.js"> </script>
-    <script src="./js/MarkerMenu.js"> </script>
+    <script src="./js/Sector.js"> </script>
     <style>
         #map {
             width: 800px;
@@ -28,58 +28,60 @@
     </div>
 
     <script>
-        var map = L.map('map').setView([35.9, 120.1], 13);
+        var map = L.map('map',{
+            renderer: L.canvas(),//指定canvas模式
+        }).setView([37, 125], 6);
 
         L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: ''
+            attribution: '',
         }).addTo(map);
 
-        let stationIcon_task = L.icon({
-            iconUrl: './img/station_task.png',
-            iconSize: [32, 45],
-            iconAnchor: [16, 45],
-            popupAnchor: [-3, -76],
-            shadowSize: [68, 95],
-            shadowAnchor: [22, 94]
-        });
-
-        function addmenu() {
-            var menu = {
-                radius: 85,
-                size: [45, 45],
-                title: "test",
-                items: [{
-                        prop: { name: "test1" },
-                        title: "任务配置1",
-                        icon: "ivu-icon ivu-icon-ios-cog",
-                        click: function() {
-                            alert("点击test1")
-                        }
-                    }, {
-                        prop: { name: "test2" },
-                        title: "任务配置2",
-                        icon: "ivu-icon ivu-icon-ios-cog",
-                        click: function() {
-                            alert("点击test2")
-                        }
-                    },
-                    {
-                        prop: { name: "test3" },
-                        title: "任务配置3",
-                        icon: "ivu-icon ivu-icon-ios-cog",
-                        click: function() {
-                            alert("点击test3")
-                        }
-                    }
-                ]
+        var sectorOption = function(fq, fqopt) {
+            var opt = {
+                tpCircle: [fq[0] * 1000, fq[1] * 1000, fq[2] * 1000, fq[3] * 1000], //option有这项配置就会按风圈模式绘制
             };
-            return menu;
-        }
-        let marker = L.marker([35.9, 120.1], { icon: stationIcon_task, zIndexOffset: 100 }).addTo(map);
-        marker.setMenu(addmenu());
-        marker.on('click', function(e) {
-            //marker.closeMenu(); 关掉其他的菜单
-        });
+            return Object.assign(opt, fqopt);
+        };
+
+        var fq_7opt = {
+            color: "#f0e477",
+            opacity: 0.6,
+            fillColor: "#eceb4a",
+            fillOpacity: 0.2,
+            weight: 1,
+        };
+        var fq_10opt = {
+            color: "#eaac50",
+            opacity: 0.6,
+            weight: 0.8,
+            fillColor: "#eaac50",
+            fillOpacity: 0.2,
+            smoothFactor: 0.5
+        };
+        var fq_12opt = {
+            color: "#e050ea",
+            opacity: 0.6,
+            weight: 0.8,
+            fillColor: "#e050ea",
+            fillOpacity: 0.2,
+            smoothFactor: 0.5
+        };
+
+        let fq7 = L.circle([37, 125], sectorOption([200, 250, 200, 150], fq_7opt)).addTo(map);
+        let fq10 = L.circle([37, 125], sectorOption([150, 200, 150, 100], fq_10opt)).addTo(map);
+        let fq12 = L.circle([37, 125], sectorOption([100, 150, 100, 50], fq_12opt)).addTo(map);
+
+        //未指定风圈 且指定了startAngle、endAngle按扇形模式绘制
+        let sector = L.circle([42, 125], {
+            radius:200000,
+            startAngle: 0,
+		    endAngle: 120,
+            color: "#f0e477",
+            opacity: 0.6,
+            fillColor: "#eceb4a",
+            fillOpacity: 0.2,
+            weight: 1,
+        }).addTo(map);
     </script>
 </body>
 
