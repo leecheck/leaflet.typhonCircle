@@ -1,8 +1,8 @@
 # leaflet.typhonCircle
-扩展 leaflet-sector 实现台风风圈绘制
+# 扩展 leaflet-sector 实现台风风圈绘制
 
-1.引用Sector.js
-2.L.circle option指定tpCircle数组
+- 1.引用Sector.js
+- 2.L.circle option指定tpCircle数组
 
 效果参考：
 demo.html
