@@ -28,10 +28,10 @@
     </div>
 
     <script>
-        var map = L.map('map',{
-            renderer: L.canvas(),//指定canvas模式
+        var myRenderer = L.canvas({ padding: 0.5 });
+        var map = L.map('map', {
+            renderer: myRenderer, //指定canvas模式
         }).setView([37, 125], 6);
-
         L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: '',
         }).addTo(map);
@@ -56,7 +56,7 @@
             weight: 0.8,
             fillColor: "#eaac50",
             fillOpacity: 0.2,
-            smoothFactor: 0.5
+            smoothFactor: 0.5,
         };
         var fq_12opt = {
             color: "#e050ea",
@@ -70,12 +70,16 @@
         let fq7 = L.circle([37, 125], sectorOption([200, 250, 200, 150], fq_7opt)).addTo(map);
         let fq10 = L.circle([37, 125], sectorOption([150, 200, 150, 100], fq_10opt)).addTo(map);
         let fq12 = L.circle([37, 125], sectorOption([100, 150, 100, 50], fq_12opt)).addTo(map);
+        setTimeout(() => {
+            map.removeLayer(fq10)
+            myRenderer._redraw()// 模拟风圈移除重绘问题
+        }, 3000)
 
         //未指定风圈 且指定了startAngle、endAngle按扇形模式绘制
         let sector = L.circle([42, 125], {
-            radius:200000,
+            radius: 200000,
             startAngle: 0,
-		    endAngle: 120,
+            endAngle: 120,
             color: "#f0e477",
             opacity: 0.6,
             fillColor: "#eceb4a",
